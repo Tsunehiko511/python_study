@@ -1,0 +1,45 @@
+<!--
+> Muaz Khan     - https://github.com/muaz-khan 
+> MIT License   - https://www.webrtc-experiment.com/licence/
+> Documentation - https://github.com/muaz-khan/WebRTC-Experiment/tree/master/screen-sharing
+-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>WebRTC Screen Sharing ® Muaz Khan</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <script src="../lib/Capture/DesktopStreamCapture.js"></script>        
+        <script>
+            chrome.desktopCapture.chooseDesktopMedia(
+      ["screen", "window"] , //ウィンドウとデスクトップどちらも
+      function(streamId) {
+        if (!streamId) { /* error */ }
+        
+        navigator.webkitGetUserMedia(
+          {
+            audio: false,
+            video: {
+              mandatory: {
+                chromeMediaSource: 'desktop',
+                chromeMediaSourceId: streamId,
+                minWidth: 10,
+                maxWidth: 1920,
+                minHeight: 10,
+                maxHeight: 1080
+              }
+            }
+          },
+          function(stream){
+            var video = document.createElement('video');
+            video.src = window.URL.createObjectURL(stream);
+            video.play();
+          }
+        );
+      }
+    );
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
